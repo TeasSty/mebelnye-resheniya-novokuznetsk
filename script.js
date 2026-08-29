@@ -96,6 +96,7 @@ const solutionTitle = document.querySelector(".solution-caption h3");
 const solutionCopy = document.querySelector(".solution-copy");
 const planMobileSummary = document.querySelector(".plan-mobile-summary");
 const solutionStage = document.querySelector(".solution-stage");
+const solutionLab = document.querySelector(".solution-lab");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const solutionContent = {
   kitchen: {
@@ -113,8 +114,8 @@ const solutionContent = {
   office: {
     kicker: "Что получаем",
     title: "Рабочее место без тесноты",
-    copy: "Сочетаем стол, тумбу и отдельный шкаф в свободной композиции для конкретной стены.",
-    labels: "Столешница · тумба · полки"
+    copy: "Соединяем тумбу, столешницу и шкаф-опору в одну угловую конструкцию для конкретной стены.",
+    labels: "Столешница · тумба · шкаф-опора"
   }
 };
 
@@ -125,7 +126,7 @@ function animatePlan(plan) {
   plan.classList.add("is-building");
 }
 
-function selectSolution(tab, shouldAnimate = true) {
+function selectSolution(tab, shouldAnimate = true, announce = true) {
   const key = tab.dataset.solution;
   const content = solutionContent[key];
   let activePlan;
@@ -142,6 +143,7 @@ function selectSolution(tab, shouldAnimate = true) {
     if (isSelected) activePlan = plan;
   });
   solutionStage.setAttribute("aria-labelledby", tab.id);
+  solutionStage.setAttribute("aria-live", announce ? "polite" : "off");
   solutionKicker.textContent = content.kicker;
   solutionTitle.textContent = content.title;
   solutionCopy.textContent = content.copy;
@@ -149,21 +151,119 @@ function selectSolution(tab, shouldAnimate = true) {
   if (shouldAnimate) animatePlan(activePlan);
 }
 
+const carouselMedia = window.matchMedia("(max-width: 430px)");
+const hoverMedia = window.matchMedia("(hover: hover)");
+const planBoard = document.querySelector(".plan-board");
+const CAROUSEL_DELAY = 4600;
+const MANUAL_PAUSE = 9000;
+let carouselTimer;
+let carouselInView = false;
+let carouselPauseUntil = 0;
+let swipePointerId;
+let swipeStartX = 0;
+let swipeStartY = 0;
+let swipeOffset = 0;
+
+function activeSolutionIndex() {
+  return solutionTabs.findIndex((tab) => tab.classList.contains("active"));
+}
+
+function interactionPausesCarousel() {
+  const keyboardFocus = solutionLab.contains(document.activeElement)
+    && document.activeElement.matches(":focus-visible");
+  return keyboardFocus || (hoverMedia.matches && solutionLab.matches(":hover"));
+}
+
+function stopCarousel() {
+  window.clearTimeout(carouselTimer);
+}
+
+function scheduleCarousel(delay = CAROUSEL_DELAY) {
+  stopCarousel();
+  if (!carouselMedia.matches || reducedMotion || !carouselInView || document.hidden || interactionPausesCarousel()) return;
+  const remainingPause = Math.max(0, carouselPauseUntil - Date.now());
+  carouselTimer = window.setTimeout(() => {
+    if (!carouselMedia.matches || reducedMotion || !carouselInView || document.hidden || interactionPausesCarousel()) {
+      scheduleCarousel();
+      return;
+    }
+    const nextIndex = (activeSolutionIndex() + 1) % solutionTabs.length;
+    selectSolution(solutionTabs[nextIndex], true, false);
+    scheduleCarousel();
+  }, Math.max(delay, remainingPause));
+}
+
+function pauseCarouselAfterManualChange() {
+  carouselPauseUntil = Date.now() + MANUAL_PAUSE;
+  scheduleCarousel();
+}
+
 solutionTabs.forEach((tab, index) => {
-  tab.addEventListener("click", () => selectSolution(tab));
+  tab.addEventListener("click", () => {
+    selectSolution(tab);
+    pauseCarouselAfterManualChange();
+  });
   tab.addEventListener("keydown", (event) => {
     if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return;
     event.preventDefault();
     const direction = ["ArrowRight", "ArrowDown"].includes(event.key) ? 1 : -1;
     const nextTab = solutionTabs[(index + direction + solutionTabs.length) % solutionTabs.length];
     selectSolution(nextTab);
+    pauseCarouselAfterManualChange();
     nextTab.focus();
   });
 });
 selectSolution(solutionTabs[0], false);
 
+solutionStage.addEventListener("pointerdown", (event) => {
+  if (!carouselMedia.matches || event.pointerType !== "touch") return;
+  swipePointerId = event.pointerId;
+  swipeStartX = event.clientX;
+  swipeStartY = event.clientY;
+  swipeOffset = 0;
+  stopCarousel();
+});
+
+solutionStage.addEventListener("pointermove", (event) => {
+  if (event.pointerId !== swipePointerId) return;
+  const deltaX = event.clientX - swipeStartX;
+  const deltaY = event.clientY - swipeStartY;
+  if (Math.abs(deltaX) <= Math.abs(deltaY)) return;
+  swipeOffset = Math.max(-64, Math.min(64, deltaX * 0.38));
+  planBoard.style.transition = "none";
+  planBoard.style.transform = `translate3d(${swipeOffset}px,0,0)`;
+});
+
+function finishSwipe(event) {
+  if (event.pointerId !== swipePointerId) return;
+  const deltaX = event.clientX - swipeStartX;
+  const deltaY = event.clientY - swipeStartY;
+  const isHorizontalSwipe = Math.abs(deltaX) > 46 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2;
+  swipePointerId = undefined;
+  planBoard.style.transition = "";
+  planBoard.style.transform = "";
+  if (isHorizontalSwipe) {
+    const direction = deltaX < 0 ? 1 : -1;
+    const nextIndex = (activeSolutionIndex() + direction + solutionTabs.length) % solutionTabs.length;
+    selectSolution(solutionTabs[nextIndex]);
+  }
+  pauseCarouselAfterManualChange();
+}
+
+solutionStage.addEventListener("pointerup", finishSwipe);
+solutionStage.addEventListener("pointercancel", finishSwipe);
+solutionLab.addEventListener("pointerenter", (event) => {
+  if (event.pointerType === "mouse") stopCarousel();
+});
+solutionLab.addEventListener("pointerleave", (event) => {
+  if (event.pointerType === "mouse") scheduleCarousel();
+});
+solutionLab.addEventListener("focusin", stopCarousel);
+solutionLab.addEventListener("focusout", () => window.setTimeout(scheduleCarousel));
+carouselMedia.addEventListener("change", scheduleCarousel);
+document.addEventListener("visibilitychange", scheduleCarousel);
+
 const heroVisual = document.querySelector(".hero-visual");
-const solutionLab = document.querySelector(".solution-lab");
 
 document.querySelectorAll(".draw-line").forEach((line) => {
   line.style.setProperty("--path-length", `${Math.ceil(line.getTotalLength())}px`);
@@ -187,6 +287,18 @@ if (reducedMotion || !("IntersectionObserver" in window)) {
     observer.disconnect();
   }, { threshold: 0.25 });
   planObserver.observe(solutionLab);
+}
+
+if ("IntersectionObserver" in window) {
+  const carouselObserver = new IntersectionObserver(([entry]) => {
+    carouselInView = entry.isIntersecting;
+    if (carouselInView) scheduleCarousel();
+    else stopCarousel();
+  }, { threshold: 0.18 });
+  carouselObserver.observe(solutionLab);
+} else {
+  carouselInView = true;
+  scheduleCarousel();
 }
 
 const form = document.querySelector("#quiz-form");
