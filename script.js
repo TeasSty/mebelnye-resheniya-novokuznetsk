@@ -4,6 +4,7 @@ const menu = document.querySelector(".nav");
 menuButton.addEventListener("click", () => {
   const isOpen = menu.classList.toggle("open");
   menuButton.setAttribute("aria-expanded", String(isOpen));
+  menuButton.querySelector(".sr-only").textContent = isOpen ? "Закрыть меню" : "Открыть меню";
 });
 
 menu.addEventListener("click", (event) => {
@@ -12,6 +13,64 @@ menu.addEventListener("click", (event) => {
     menuButton.setAttribute("aria-expanded", "false");
   }
 });
+
+const solutionTabs = [...document.querySelectorAll(".solution-tab")];
+const assembly = document.querySelector(".assembly");
+const solutionKicker = document.querySelector(".solution-kicker");
+const solutionTitle = document.querySelector(".solution-caption h3");
+const solutionCopy = document.querySelector(".solution-copy");
+const assemblyState = document.querySelector(".assembly-state");
+const solutionStage = document.querySelector(".solution-stage");
+const solutionContent = {
+  kitchen: {
+    kicker: "Проектируется вокруг помещения",
+    title: "Кухня без случайных зазоров",
+    copy: "Расположение секций и рабочей поверхности подбирается под размеры комнаты и привычный порядок действий.",
+    state: "Схема 01 / кухня"
+  },
+  wardrobe: {
+    kicker: "Каждая секция решает задачу",
+    title: "Хранение на своём месте",
+    copy: "Ширина отделений, полки и штанги распределяются под вещи владельца и геометрию конкретной ниши.",
+    state: "Схема 02 / шкаф"
+  },
+  office: {
+    kicker: "Работает каждый сантиметр",
+    title: "Рабочая зона без тесноты",
+    copy: "Стол, хранение и открытые полки объединяются в композицию, которая не перегружает небольшую комнату.",
+    state: "Схема 03 / рабочая зона"
+  }
+};
+
+function selectSolution(tab) {
+  const key = tab.dataset.solution;
+  const content = solutionContent[key];
+  solutionTabs.forEach((item) => {
+    const isSelected = item === tab;
+    item.classList.toggle("active", isSelected);
+    item.setAttribute("aria-selected", String(isSelected));
+    item.tabIndex = isSelected ? 0 : -1;
+  });
+  assembly.className = `assembly assembly-${key}`;
+  solutionStage.setAttribute("aria-labelledby", tab.id);
+  solutionKicker.textContent = content.kicker;
+  solutionTitle.textContent = content.title;
+  solutionCopy.textContent = content.copy;
+  assemblyState.textContent = content.state;
+}
+
+solutionTabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => selectSolution(tab));
+  tab.addEventListener("keydown", (event) => {
+    if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return;
+    event.preventDefault();
+    const direction = ["ArrowRight", "ArrowDown"].includes(event.key) ? 1 : -1;
+    const nextTab = solutionTabs[(index + direction + solutionTabs.length) % solutionTabs.length];
+    selectSolution(nextTab);
+    nextTab.focus();
+  });
+});
+selectSolution(solutionTabs[0]);
 
 const form = document.querySelector("#quiz-form");
 const steps = [...document.querySelectorAll(".quiz-step")];

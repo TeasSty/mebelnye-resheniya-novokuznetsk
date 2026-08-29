@@ -10,6 +10,8 @@
   <meta property="og:locale" content="ru_RU">
   <meta property="og:title" content="Мебельные решения — мебель на заказ в Новокузнецке">
   <meta property="og:description" content="Спроектируем мебель под ваши размеры, привычки и интерьер.">
+  <meta property="og:url" content="https://teassty.github.io/mebelnye-resheniya-novokuznetsk/">
+  <link rel="canonical" href="https://teassty.github.io/mebelnye-resheniya-novokuznetsk/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Prata&display=swap" rel="stylesheet">
@@ -108,12 +110,49 @@
         <p>фотографий готовой мебели опубликовано в сообществе компании</p>
         <a class="button button-light" href="https://vk.ru/meb_resh_nkvz" target="_blank" rel="noopener">Открыть портфолио в VK <span>↗</span></a>
       </div>
-      <div class="project-cards">
-        <article><span>КУХНИ</span><div class="project-shape kitchen-shape" aria-hidden="true"><i></i><i></i><i></i><i></i></div><h3>Точно в размеры помещения</h3></article>
-        <article><span>ШКАФЫ</span><div class="project-shape wardrobe-shape" aria-hidden="true"><i></i><i></i><i></i></div><h3>Хранение без лишних зазоров</h3></article>
-        <article><span>РАБОЧИЕ ЗОНЫ</span><div class="project-shape office-shape" aria-hidden="true"><i></i><i></i><i></i></div><h3>Даже для небольшого заказа</h3></article>
+      <article class="vk-project">
+        <picture>
+          <img src="assets/vk-project-wardrobe.webp" width="550" height="370" loading="lazy" alt="Шкаф и стеллаж для зонирования, опубликованные компанией в VK">
+        </picture>
+        <div>
+          <p class="eyebrow">Из публичного VK компании</p>
+          <h3>Шкаф и стеллаж<br>для зонирования</h3>
+          <p>Фрагмент реальной публикации «Мебельных решений». Открытые и закрытые секции объединены в конструкцию для конкретного помещения.</p>
+          <a href="https://vk.ru/meb_resh_nkvz" target="_blank" rel="noopener">Посмотреть публикации компании ↗</a>
+        </div>
+      </article>
+      <div class="solution-lab">
+        <div class="solution-controls" role="tablist" aria-label="Выберите тип мебели">
+          <button class="solution-tab active" id="solution-kitchen" type="button" role="tab" aria-selected="true" aria-controls="solution-stage" data-solution="kitchen">
+            <span>01</span><strong>Кухня</strong><small>Рабочая зона под ваш сценарий</small>
+          </button>
+          <button class="solution-tab" id="solution-wardrobe" type="button" role="tab" aria-selected="false" aria-controls="solution-stage" data-solution="wardrobe">
+            <span>02</span><strong>Шкаф</strong><small>Хранение под размеры ниши</small>
+          </button>
+          <button class="solution-tab" id="solution-office" type="button" role="tab" aria-selected="false" aria-controls="solution-stage" data-solution="office">
+            <span>03</span><strong>Рабочая зона</strong><small>Функционально даже на малой площади</small>
+          </button>
+        </div>
+        <div class="solution-stage" id="solution-stage" role="tabpanel" aria-labelledby="solution-kitchen" aria-live="polite">
+          <div class="blueprint-grid" aria-hidden="true"></div>
+          <div class="assembly assembly-kitchen" aria-hidden="true">
+            <i class="module module-a"></i><i class="module module-b"></i><i class="module module-c"></i>
+            <i class="module module-d"></i><i class="module module-e"></i><i class="worktop"></i>
+          </div>
+          <div class="blueprint-dimension dimension-x" aria-hidden="true"><span>по ширине стены</span></div>
+          <div class="blueprint-dimension dimension-y" aria-hidden="true"><span>до потолка</span></div>
+          <div class="solution-caption">
+            <p class="solution-kicker">Проектируется вокруг помещения</p>
+            <h3>Кухня без случайных зазоров</h3>
+            <p class="solution-copy">Расположение секций и рабочей поверхности подбирается под размеры комнаты и привычный порядок действий.</p>
+          </div>
+          <span class="assembly-state">Схема 01 / кухня</span>
+        </div>
       </div>
-      <p class="media-note">В демо использованы схемы вместо чужих интерьерных фотографий. Реальные работы доступны по ссылке выше.</p>
+      <div class="portfolio-note">
+        <p><strong>Это не изображение готовой работы.</strong> Интерактивная схема показывает принцип индивидуального проектирования. Реальные кухни, шкафы и рабочие зоны компании собраны в VK.</p>
+        <a href="https://vk.ru/meb_resh_nkvz" target="_blank" rel="noopener">Смотреть реальные фото ↗</a>
+      </div>
     </section>
 
     <section class="section quote-section">
@@ -122,6 +161,16 @@
         Две другие компании отказали, так как им неинтересно брать такой маленький заказ. «Мебельные решения» без лишних разговоров приняли заказ и учли все нюансы.
       </blockquote>
       <p class="quote-author">Татьяна Домникова <span>· подтверждённый отзыв в 2ГИС</span></p>
+      <div class="review-points">
+        <article>
+          <p>«Шкафчик аккуратно вписался в коридор и украсил его. Теперь каждая вещь на своём месте».</p>
+          <span>Ирина Перминова · 2ГИС</span>
+        </article>
+        <article>
+          <p>«Компания подошла по цене, качеству материалов и времени выполнения заказа. Уже месяц пользуемся кухней — всем довольны».</p>
+          <span>Ольга Пунтус · 2ГИС</span>
+        </article>
+      </div>
     </section>
 
     <section class="section process" id="process">
@@ -196,6 +245,10 @@
       <a href="#top">Наверх ↑</a>
     </div>
   </footer>
+  <div class="mobile-action">
+    <a href="tel:+79529365521" aria-label="Позвонить в Мебельные решения">Позвонить</a>
+    <a href="#quiz">Получить расчёт <span>↗</span></a>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
