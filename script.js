@@ -1,17 +1,62 @@
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+
+function resetScrollPosition() {
+  if (!window.location.hash) window.scrollTo(0, 0);
+}
+
+window.addEventListener("load", () => requestAnimationFrame(resetScrollPosition));
+window.addEventListener("pageshow", resetScrollPosition);
+
 const menuButton = document.querySelector(".menu-button");
 const menu = document.querySelector(".nav");
+const mobileMenuMedia = window.matchMedia("(max-width: 900px)");
 
-menuButton.addEventListener("click", () => {
-  const isOpen = menu.classList.toggle("open");
+function setMenuState(isOpen, restoreFocus = false) {
+  menu.classList.toggle("open", isOpen);
+  document.body.classList.toggle("menu-open", isOpen);
   menuButton.setAttribute("aria-expanded", String(isOpen));
   menuButton.querySelector(".sr-only").textContent = isOpen ? "Закрыть меню" : "Открыть меню";
+  if (isOpen) {
+    requestAnimationFrame(() => menu.querySelector("a")?.focus());
+  } else if (restoreFocus) {
+    menuButton.focus();
+  }
+}
+
+menuButton.addEventListener("click", () => {
+  setMenuState(menuButton.getAttribute("aria-expanded") !== "true");
 });
 
 menu.addEventListener("click", (event) => {
   if (event.target.matches("a")) {
-    menu.classList.remove("open");
-    menuButton.setAttribute("aria-expanded", "false");
+    setMenuState(false);
   }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (menuButton.getAttribute("aria-expanded") !== "true") return;
+  if (event.key === "Escape") {
+    event.preventDefault();
+    setMenuState(false, true);
+    return;
+  }
+  if (event.key !== "Tab") return;
+  const focusable = [menuButton, ...menu.querySelectorAll("a")];
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+});
+
+mobileMenuMedia.addEventListener("change", (event) => {
+  if (!event.matches) setMenuState(false);
 });
 
 const solutionTabs = [...document.querySelectorAll(".solution-tab")];
@@ -19,28 +64,41 @@ const technicalPlans = [...document.querySelectorAll(".technical-plan")];
 const solutionKicker = document.querySelector(".solution-kicker");
 const solutionTitle = document.querySelector(".solution-caption h3");
 const solutionCopy = document.querySelector(".solution-copy");
+const planMobileSummary = document.querySelector(".plan-mobile-summary");
 const solutionStage = document.querySelector(".solution-stage");
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const solutionContent = {
   kitchen: {
     kicker: "Что получаем",
     title: "Рабочая линия без случайных зазоров",
-    copy: "Сопоставляем ширину стены, высоту потолка, расположение техники и нужное количество хранения."
+    copy: "Сопоставляем ширину стены, высоту потолка, расположение техники и нужное количество хранения.",
+    labels: "Столешница · ящики · техника"
   },
   wardrobe: {
     kicker: "Что получаем",
     title: "Наполнение под ваши вещи",
-    copy: "Распределяем полки, штанги и ящики с учётом ширины ниши, высоты потолка и состава хранения."
+    copy: "Распределяем полки, штанги и ящики с учётом ширины ниши, высоты потолка и состава хранения.",
+    labels: "Шкаф до потолка · полки · ящики"
   },
   office: {
     kicker: "Что получаем",
     title: "Рабочее место без тесноты",
-    copy: "Объединяем стол, тумбу, верхние секции и вывод проводов в компактную конструкцию для конкретной стены."
+    copy: "Объединяем стол, тумбу и верхние секции в компактную конструкцию для конкретной стены.",
+    labels: "Столешница · тумба · полки"
   }
 };
 
-function selectSolution(tab) {
+function animatePlan(plan) {
+  if (!plan || reducedMotion) return;
+  plan.classList.remove("is-building");
+  void plan.getBoundingClientRect();
+  plan.classList.add("is-building");
+}
+
+function selectSolution(tab, shouldAnimate = true) {
   const key = tab.dataset.solution;
   const content = solutionContent[key];
+  let activePlan;
   solutionTabs.forEach((item) => {
     const isSelected = item === tab;
     item.classList.toggle("active", isSelected);
@@ -51,11 +109,14 @@ function selectSolution(tab) {
     const isSelected = plan.dataset.plan === key;
     plan.toggleAttribute("hidden", !isSelected);
     plan.classList.toggle("active", isSelected);
+    if (isSelected) activePlan = plan;
   });
   solutionStage.setAttribute("aria-labelledby", tab.id);
   solutionKicker.textContent = content.kicker;
   solutionTitle.textContent = content.title;
   solutionCopy.textContent = content.copy;
+  planMobileSummary.textContent = content.labels;
+  if (shouldAnimate) animatePlan(activePlan);
 }
 
 solutionTabs.forEach((tab, index) => {
@@ -69,7 +130,33 @@ solutionTabs.forEach((tab, index) => {
     nextTab.focus();
   });
 });
-selectSolution(solutionTabs[0]);
+selectSolution(solutionTabs[0], false);
+
+const heroVisual = document.querySelector(".hero-visual");
+const solutionLab = document.querySelector(".solution-lab");
+
+document.querySelectorAll(".draw-piece, .draw-dimension, .hero-dimension path").forEach((line) => {
+  line.style.setProperty("--path-length", `${Math.ceil(line.getTotalLength())}px`);
+});
+
+if (reducedMotion || !("IntersectionObserver" in window)) {
+  heroVisual.classList.add("is-visible");
+  if (!reducedMotion) animatePlan(technicalPlans[0]);
+} else {
+  const heroObserver = new IntersectionObserver(([entry], observer) => {
+    if (!entry.isIntersecting) return;
+    heroVisual.classList.add("is-visible");
+    observer.disconnect();
+  }, { threshold: 0.3 });
+  heroObserver.observe(heroVisual);
+
+  const planObserver = new IntersectionObserver(([entry], observer) => {
+    if (!entry.isIntersecting) return;
+    animatePlan(document.querySelector(".technical-plan:not([hidden])"));
+    observer.disconnect();
+  }, { threshold: 0.25 });
+  planObserver.observe(solutionLab);
+}
 
 const form = document.querySelector("#quiz-form");
 const steps = [...document.querySelectorAll(".quiz-step")];
@@ -93,8 +180,10 @@ function showStep(index) {
 }
 
 nextButton.addEventListener("click", () => {
+  if (currentStep >= steps.length - 1) return;
   const fieldset = steps[currentStep];
-  if (!fieldset.querySelector("input:checked")) {
+  const choices = fieldset.querySelectorAll("input[type='radio']");
+  if (choices.length && !fieldset.querySelector("input:checked")) {
     error.textContent = "Выберите один из вариантов.";
     return;
   }

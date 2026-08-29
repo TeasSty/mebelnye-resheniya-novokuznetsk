@@ -64,19 +64,27 @@
         </div>
       </div>
 
-      <div class="hero-visual" aria-label="Схема индивидуального мебельного проекта">
-        <div class="measure measure-top"><span>индивидуальная ширина</span></div>
-        <div class="measure measure-side"><span>под ваш потолок</span></div>
-        <div class="cabinet">
-          <div class="cabinet-cell tall"><span>01</span></div>
-          <div class="cabinet-cell shelves"><i></i><i></i><i></i></div>
-          <div class="cabinet-cell top"><span>02</span></div>
-          <div class="cabinet-cell bench"><span>место для жизни</span></div>
-          <div class="cabinet-cell narrow"><span>03</span></div>
-        </div>
+      <div class="hero-visual awaiting-draw" aria-label="Схема индивидуального мебельного проекта">
+        <svg class="hero-plan" viewBox="0 0 560 500" role="img" aria-label="Линейная схема шкафа, собирающаяся из отдельных элементов">
+          <g class="hero-dimension">
+            <path pathLength="1" d="M90 62H470M90 52V72M470 52V72"/>
+            <text x="280" y="45">ширина по замеру</text>
+          </g>
+          <g class="hero-furniture">
+            <rect class="draw-piece" pathLength="1" x="100" y="105" width="360" height="300"/>
+            <path class="draw-piece" pathLength="1" d="M235 105V405M385 105V405"/>
+            <path class="draw-piece" pathLength="1" d="M255 175H365M255 245H365M255 315H365"/>
+            <path class="draw-piece hero-accent" pathLength="1" d="M100 335H235"/>
+          </g>
+          <g class="hero-labels">
+            <text x="118" y="140">шкаф до потолка</text>
+            <text x="275" y="228">полки</text>
+            <text x="116" y="365">ящики</text>
+          </g>
+        </svg>
         <div class="visual-note">
-          <span>Проектируем не «модули»</span>
-          <strong>а ваше пространство</strong>
+          <strong>Собираем под ваше пространство</strong>
+          <span>Схема показывает принцип. Реальный проект — по вашим замерам.</span>
         </div>
       </div>
     </section>
@@ -142,72 +150,62 @@
         </div>
         <div class="solution-stage" id="solution-stage" role="tabpanel" aria-labelledby="solution-kitchen" aria-live="polite">
           <div class="plan-board">
-            <svg class="technical-plan active" data-plan="kitchen" viewBox="0 0 800 560" role="img" aria-label="Демонстрационная схема кухни с размерами, шкафами, ящиками и рабочей поверхностью">
-              <g class="plan-dimensions">
-                <path d="M110 50H690M110 40V60M690 40V60"/><text x="400" y="38">пример: 2800 мм</text>
-                <path d="M72 100V480M62 100H82M62 480H82"/><text x="48" y="300" transform="rotate(-90 48 300)">пример: 2400 мм</text>
+            <svg class="technical-plan active" data-plan="kitchen" viewBox="60 20 600 410" role="img" aria-label="Упрощённая схема кухни со столешницей, ящиками и местом для техники">
+              <g class="plan-dimension">
+                <path class="draw-dimension" pathLength="1" d="M105 58H615M105 48V68M615 48V68"/>
+                <text x="360" y="40">пример: 2800 мм</text>
               </g>
               <g class="furniture-lines">
-                <rect x="110" y="100" width="580" height="380"/>
-                <rect x="110" y="100" width="145" height="130"/><rect x="255" y="100" width="145" height="130"/>
-                <rect x="400" y="100" width="145" height="130"/><rect x="545" y="100" width="145" height="130"/>
-                <path d="M110 290H690" class="accent-line"/>
-                <rect x="110" y="295" width="145" height="185"/><path d="M110 360H255M110 420H255"/>
-                <rect x="255" y="295" width="180" height="185"/><path d="M255 390H435"/>
-                <rect x="435" y="295" width="125" height="185"/><circle cx="498" cy="346" r="32"/>
-                <rect x="560" y="295" width="130" height="185"/><path d="M572 310H678V462H572Z"/>
+                <rect class="draw-piece" pathLength="1" x="105" y="100" width="510" height="285"/>
+                <path class="draw-piece" pathLength="1" d="M275 100V220M445 100V220"/>
+                <path class="draw-piece accent-line" pathLength="1" d="M105 235H615"/>
+                <path class="draw-piece" pathLength="1" d="M245 235V385M410 235V385M105 310H245"/>
+                <circle class="draw-piece" pathLength="1" cx="515" cy="302" r="38"/>
               </g>
               <g class="plan-labels">
-                <path d="M225 130H75"/><circle cx="225" cy="130" r="4"/><text x="18" y="125">верхние</text><text x="18" y="146">секции</text>
-                <path d="M330 290V265H250"/><circle cx="330" cy="290" r="4"/><text x="145" y="260">рабочая поверхность</text>
-                <path d="M175 390H75"/><circle cx="175" cy="390" r="4"/><text x="20" y="386">ящики</text>
-                <path d="M625 380H735"/><circle cx="625" cy="380" r="4"/><text x="705" y="372">место</text><text x="705" y="393">техники</text>
+                <text x="126" y="260">столешница</text>
+                <text x="130" y="352">ящики</text>
+                <text x="472" y="365">техника</text>
               </g>
             </svg>
-            <svg class="technical-plan" data-plan="wardrobe" viewBox="0 0 800 560" role="img" aria-label="Демонстрационная схема шкафа с размерами, полками, штангой и выдвижными ящиками" hidden>
-              <g class="plan-dimensions">
-                <path d="M125 50H675M125 40V60M675 40V60"/><text x="400" y="38">пример: 2200 мм</text>
-                <path d="M85 90V490M75 90H95M75 490H95"/><text x="58" y="300" transform="rotate(-90 58 300)">пример: 2500 мм</text>
+            <svg class="technical-plan" data-plan="wardrobe" viewBox="60 20 600 410" role="img" aria-label="Упрощённая схема шкафа до потолка с полками и ящиками" hidden>
+              <g class="plan-dimension">
+                <path class="draw-dimension" pathLength="1" d="M125 58H595M125 48V68M595 48V68"/>
+                <text x="360" y="40">пример: 2200 мм</text>
               </g>
               <g class="furniture-lines">
-                <rect x="125" y="90" width="550" height="400"/>
-                <path d="M325 90V490M500 90V490"/>
-                <path d="M145 150H305M145 305H305"/><path d="M165 175H285" class="accent-line"/>
-                <path d="M345 145H480M345 210H480M345 275H480"/>
-                <rect x="345" y="330" width="135" height="65"/><rect x="345" y="395" width="135" height="65"/>
-                <path d="M520 155H655" class="accent-line"/><path d="M520 360H655"/>
+                <rect class="draw-piece" pathLength="1" x="125" y="90" width="470" height="310"/>
+                <path class="draw-piece" pathLength="1" d="M300 90V400M455 90V400"/>
+                <path class="draw-piece" pathLength="1" d="M320 150H435M320 215H435M320 280H435"/>
+                <path class="draw-piece" pathLength="1" d="M475 285H575M475 335H575"/>
+                <path class="draw-piece accent-line" pathLength="1" d="M150 165H275"/>
               </g>
               <g class="plan-labels">
-                <path d="M225 175H70"/><circle cx="225" cy="175" r="4"/><text x="18" y="171">штанга</text>
-                <path d="M410 210V175H735"/><circle cx="410" cy="210" r="4"/><text x="690" y="168">полки</text>
-                <path d="M410 365H735"/><circle cx="410" cy="365" r="4"/><text x="680" y="358">выдвижные</text><text x="700" y="379">ящики</text>
-                <path d="M588 155V120H735"/><circle cx="588" cy="155" r="4"/><text x="665" y="112">длинные вещи</text>
+                <text x="145" y="120">шкаф до потолка</text>
+                <text x="335" y="258">полки</text>
+                <text x="485" y="372">ящики</text>
               </g>
             </svg>
-            <svg class="technical-plan" data-plan="office" viewBox="0 0 800 560" role="img" aria-label="Демонстрационная схема рабочей зоны со столом, тумбой, полками и местом для проводов" hidden>
-              <g class="plan-dimensions">
-                <path d="M115 60H685M115 50V70M685 50V70"/><text x="400" y="47">пример: 2400 мм</text>
-                <path d="M75 105V475M65 105H85M65 475H85"/><text x="50" y="300" transform="rotate(-90 50 300)">пример: 2100 мм</text>
+            <svg class="technical-plan" data-plan="office" viewBox="60 20 600 410" role="img" aria-label="Упрощённая схема рабочей зоны со столешницей, тумбой и полками" hidden>
+              <g class="plan-dimension">
+                <path class="draw-dimension" pathLength="1" d="M100 58H620M100 48V68M620 48V68"/>
+                <text x="360" y="40">пример: 2400 мм</text>
               </g>
               <g class="furniture-lines">
-                <rect x="115" y="105" width="570" height="370"/>
-                <rect x="490" y="105" width="195" height="215"/><path d="M490 175H685M490 245H685"/>
-                <path d="M115 315H490" class="accent-line"/><path d="M145 315V475M460 315V475"/>
-                <rect x="115" y="355" width="145" height="120"/><path d="M115 395H260M115 435H260"/>
-                <circle cx="445" cy="330" r="8"/><path d="M445 338V420"/>
+                <path class="draw-piece accent-line" pathLength="1" d="M100 270H620"/>
+                <path class="draw-piece" pathLength="1" d="M135 270V395M430 270V395"/>
+                <rect class="draw-piece" pathLength="1" x="455" y="105" width="165" height="165"/>
+                <path class="draw-piece" pathLength="1" d="M455 160H620M455 215H620"/>
+                <path class="draw-piece" pathLength="1" d="M135 325H255M135 360H255"/>
               </g>
               <g class="plan-labels">
-                <path d="M585 175H740"/><circle cx="585" cy="175" r="4"/><text x="690" y="168">полки</text>
-                <path d="M300 315V270H205"/><circle cx="300" cy="315" r="4"/><text x="112" y="265">столешница</text>
-                <path d="M185 395H55"/><circle cx="185" cy="395" r="4"/><text x="15" y="390">тумба</text>
-                <path d="M445 330H725"/><circle cx="445" cy="330" r="4"/><text x="655" y="323">вывод проводов</text>
+                <text x="120" y="252">столешница</text>
+                <text x="156" y="388">тумба</text>
+                <text x="500" y="198">полки</text>
               </g>
             </svg>
-            <div class="plan-legend" aria-label="Условные обозначения">
-              <span><i class="legend-solid"></i>корпус и фасады</span>
-              <span><i class="legend-accent"></i>ключевая рабочая зона</span>
-              <span><i class="legend-dot"></i>точка выноски</span>
-            </div>
+            <p class="plan-mobile-summary">Столешница · ящики · техника</p>
+            <p class="plan-note">Схема показывает принцип проектирования. Реальный проект — по вашим замерам.</p>
           </div>
           <div class="solution-caption">
             <p class="solution-kicker">Что получаем</p>
@@ -263,7 +261,7 @@
       <div class="quiz-intro">
         <p class="eyebrow">Предварительный расчёт</p>
         <h2>Расскажите,<br>что нужно сделать</h2>
-        <p>Ответьте на несколько вопросов. Мы скопируем текст заявки и откроем страницу компании в VK.</p>
+        <p>На сайте вы оставляете предварительную заявку. Точную стоимость рассчитываем после обсуждения задачи и замера — напишите в <a href="https://vk.ru/meb_resh_nkvz" target="_blank" rel="noopener">VK</a> или позвоните по <a href="tel:+79529365521">+7 952 936-55-21</a>.</p>
       </div>
       <form class="quiz" id="quiz-form">
         <div class="quiz-progress"><span id="progress-label">Шаг 1 из 3</span><i><b id="progress-bar"></b></i></div>
