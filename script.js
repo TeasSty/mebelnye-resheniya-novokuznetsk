@@ -61,6 +61,34 @@ mobileMenuMedia.addEventListener("change", (event) => {
   if (!event.matches) setMenuState(false);
 });
 
+const marquee = document.querySelector(".marquee");
+const marqueeTrack = document.querySelector(".marquee-track");
+let marqueeResizeFrame;
+
+function buildSeamlessMarquee() {
+  window.cancelAnimationFrame(marqueeResizeFrame);
+  marqueeResizeFrame = window.requestAnimationFrame(() => {
+    const sourceGroup = marqueeTrack.querySelector(".marquee-group");
+    [...marqueeTrack.children].slice(1).forEach((group) => group.remove());
+    const groupWidth = sourceGroup.getBoundingClientRect().width;
+    if (!groupWidth) return;
+
+    const groupCount = Math.max(3, Math.ceil((marquee.clientWidth * 2) / groupWidth) + 1);
+    for (let index = 1; index < groupCount; index += 1) {
+      const clone = sourceGroup.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      marqueeTrack.append(clone);
+    }
+
+    marqueeTrack.style.setProperty("--marquee-distance", `${-groupWidth}px`);
+    marqueeTrack.style.setProperty("--marquee-duration", `${groupWidth / 72}s`);
+  });
+}
+
+buildSeamlessMarquee();
+new ResizeObserver(buildSeamlessMarquee).observe(marquee);
+document.fonts?.ready.then(buildSeamlessMarquee);
+
 const solutionTabs = [...document.querySelectorAll(".solution-tab")];
 const technicalPlans = [...document.querySelectorAll(".technical-plan")];
 const solutionKicker = document.querySelector(".solution-kicker");
