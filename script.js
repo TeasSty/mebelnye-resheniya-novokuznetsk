@@ -178,7 +178,7 @@ if (reducedMotion || !("IntersectionObserver" in window)) {
     if (!entry.isIntersecting) return;
     heroVisual.classList.add("is-visible");
     observer.disconnect();
-  }, { threshold: 0.3 });
+  }, { threshold: 0.2 });
   heroObserver.observe(heroVisual);
 
   const planObserver = new IntersectionObserver(([entry], observer) => {
