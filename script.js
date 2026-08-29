@@ -15,30 +15,26 @@ menu.addEventListener("click", (event) => {
 });
 
 const solutionTabs = [...document.querySelectorAll(".solution-tab")];
-const assembly = document.querySelector(".assembly");
+const technicalPlans = [...document.querySelectorAll(".technical-plan")];
 const solutionKicker = document.querySelector(".solution-kicker");
 const solutionTitle = document.querySelector(".solution-caption h3");
 const solutionCopy = document.querySelector(".solution-copy");
-const assemblyState = document.querySelector(".assembly-state");
 const solutionStage = document.querySelector(".solution-stage");
 const solutionContent = {
   kitchen: {
-    kicker: "Проектируется вокруг помещения",
-    title: "Кухня без случайных зазоров",
-    copy: "Расположение секций и рабочей поверхности подбирается под размеры комнаты и привычный порядок действий.",
-    state: "Схема 01 / кухня"
+    kicker: "Что получаем",
+    title: "Рабочая линия без случайных зазоров",
+    copy: "Сопоставляем ширину стены, высоту потолка, расположение техники и нужное количество хранения."
   },
   wardrobe: {
-    kicker: "Каждая секция решает задачу",
-    title: "Хранение на своём месте",
-    copy: "Ширина отделений, полки и штанги распределяются под вещи владельца и геометрию конкретной ниши.",
-    state: "Схема 02 / шкаф"
+    kicker: "Что получаем",
+    title: "Наполнение под ваши вещи",
+    copy: "Распределяем полки, штанги и ящики с учётом ширины ниши, высоты потолка и состава хранения."
   },
   office: {
-    kicker: "Работает каждый сантиметр",
-    title: "Рабочая зона без тесноты",
-    copy: "Стол, хранение и открытые полки объединяются в композицию, которая не перегружает небольшую комнату.",
-    state: "Схема 03 / рабочая зона"
+    kicker: "Что получаем",
+    title: "Рабочее место без тесноты",
+    copy: "Объединяем стол, тумбу, верхние секции и вывод проводов в компактную конструкцию для конкретной стены."
   }
 };
 
@@ -51,12 +47,15 @@ function selectSolution(tab) {
     item.setAttribute("aria-selected", String(isSelected));
     item.tabIndex = isSelected ? 0 : -1;
   });
-  assembly.className = `assembly assembly-${key}`;
+  technicalPlans.forEach((plan) => {
+    const isSelected = plan.dataset.plan === key;
+    plan.toggleAttribute("hidden", !isSelected);
+    plan.classList.toggle("active", isSelected);
+  });
   solutionStage.setAttribute("aria-labelledby", tab.id);
   solutionKicker.textContent = content.kicker;
   solutionTitle.textContent = content.title;
   solutionCopy.textContent = content.copy;
-  assemblyState.textContent = content.state;
 }
 
 solutionTabs.forEach((tab, index) => {
