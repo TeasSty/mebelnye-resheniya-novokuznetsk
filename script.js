@@ -12,14 +12,16 @@ window.addEventListener("pageshow", resetScrollPosition);
 const menuButton = document.querySelector(".menu-button");
 const menu = document.querySelector(".nav");
 const mobileMenuMedia = window.matchMedia("(max-width: 900px)");
+let menuFocusTimer;
 
 function setMenuState(isOpen, restoreFocus = false) {
+  window.clearTimeout(menuFocusTimer);
   menu.classList.toggle("open", isOpen);
   document.body.classList.toggle("menu-open", isOpen);
   menuButton.setAttribute("aria-expanded", String(isOpen));
   menuButton.querySelector(".sr-only").textContent = isOpen ? "Закрыть меню" : "Открыть меню";
   if (isOpen) {
-    requestAnimationFrame(() => menu.querySelector("a")?.focus());
+    menuFocusTimer = window.setTimeout(() => menu.querySelector("a")?.focus(), 330);
   } else if (restoreFocus) {
     menuButton.focus();
   }
@@ -135,8 +137,9 @@ selectSolution(solutionTabs[0], false);
 const heroVisual = document.querySelector(".hero-visual");
 const solutionLab = document.querySelector(".solution-lab");
 
-document.querySelectorAll(".draw-piece, .draw-dimension, .hero-dimension path").forEach((line) => {
+document.querySelectorAll(".draw-line").forEach((line) => {
   line.style.setProperty("--path-length", `${Math.ceil(line.getTotalLength())}px`);
+  line.style.setProperty("--draw-delay", `${Number(line.dataset.delay || 0)}ms`);
 });
 
 if (reducedMotion || !("IntersectionObserver" in window)) {

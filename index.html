@@ -64,33 +64,42 @@
         </div>
       </div>
 
-      <div class="hero-visual awaiting-draw" aria-label="Схема индивидуального мебельного проекта">
-        <svg class="hero-plan" viewBox="0 0 560 500" role="img" aria-label="Линейная схема шкафа, собирающаяся из отдельных элементов">
-          <g class="hero-dimension">
-            <path pathLength="1" d="M90 62H470M90 52V72M470 52V72"/>
-            <text x="280" y="45">ширина по замеру</text>
+      <div class="hero-visual awaiting-draw" aria-label="Изометрическая схема индивидуальной кухни">
+        <!-- Original SVG artwork. Draw sequencing is inspired by Vivus (MIT); no third-party code is bundled. -->
+        <svg class="hero-plan iso-illustration" viewBox="0 0 700 560" role="img" aria-label="Изометрическая кухня со шкафами, столешницей и встроенной техникой">
+          <g class="iso-fills" aria-hidden="true">
+            <path class="iso-fill fill-late" d="M145 300H545L602 268H202Z"/>
+            <path class="iso-fill fill-dark" d="M545 300L602 268V426L545 460Z"/>
+            <path class="iso-fill fill-soft" d="M175 112H520V248H175Z"/>
+            <path class="iso-fill fill-dark" d="M520 112L575 80V216L520 248Z"/>
+            <path class="iso-fill fill-soft" d="M145 300H545V460H145Z"/>
           </g>
-          <g class="hero-furniture">
-            <rect class="draw-piece" pathLength="1" x="100" y="105" width="360" height="300"/>
-            <path class="draw-piece" pathLength="1" d="M235 105V405M385 105V405"/>
-            <path class="draw-piece" pathLength="1" d="M255 175H365M255 245H365M255 315H365"/>
-            <path class="draw-piece hero-accent" pathLength="1" d="M100 335H235"/>
+          <g class="iso-lines">
+            <path class="draw-line phase-volume" data-delay="80" d="M145 300H545V460H145ZM145 300L202 268H602L545 300M545 300L602 268V426L545 460"/>
+            <path class="draw-line phase-volume" data-delay="220" d="M175 112H520V248H175ZM175 112L230 80H575L520 112M520 112L575 80V216L520 248"/>
+            <path class="draw-line phase-module" data-delay="500" d="M270 112V248M385 112V248M145 350H545M255 300V460M390 300V460"/>
+            <path class="draw-line phase-module" data-delay="700" d="M545 112V300M545 188H575M545 264H575"/>
+            <path class="draw-line phase-detail" data-delay="920" d="M402 323H520V443H402ZM416 340H506M423 425H499"/>
+            <path class="draw-line phase-detail" data-delay="1080" d="M168 327H232M277 327H367M198 135V225M293 135V225M408 135V225"/>
+            <path class="draw-line phase-accent iso-accent" data-delay="1300" d="M145 300H545L602 268M255 350H390"/>
           </g>
-          <g class="hero-labels">
-            <text x="118" y="140">шкаф до потолка</text>
-            <text x="275" y="228">полки</text>
-            <text x="116" y="365">ящики</text>
+          <g class="iso-shadow" aria-hidden="true">
+            <path d="M112 478L515 478L625 420L226 420Z"/>
           </g>
         </svg>
         <div class="visual-note">
-          <strong>Собираем под ваше пространство</strong>
-          <span>Схема показывает принцип. Реальный проект — по вашим замерам.</span>
+          <strong>Кухня собирается вокруг помещения</strong>
+          <span>Объём, модули и техника — в одном проекте по вашим замерам.</span>
         </div>
       </div>
     </section>
 
     <section class="marquee" aria-label="Основные направления">
-      <div>КУХНИ <i>•</i> ШКАФЫ <i>•</i> ГАРДЕРОБНЫЕ <i>•</i> ДЕТСКИЕ <i>•</i> РАБОЧИЕ ЗОНЫ <i>•</i></div>
+      <span class="sr-only">Кухни, шкафы, гардеробные, детские и рабочие зоны</span>
+      <div class="marquee-track" aria-hidden="true">
+        <div class="marquee-group"><span>Кухни</span><i>•</i><span>Шкафы</span><i>•</i><span>Гардеробные</span><i>•</i><span>Детские</span><i>•</i><span>Рабочие зоны</span><i>•</i></div>
+        <div class="marquee-group" aria-hidden="true"><span>Кухни</span><i>•</i><span>Шкафы</span><i>•</i><span>Гардеробные</span><i>•</i><span>Детские</span><i>•</i><span>Рабочие зоны</span><i>•</i></div>
+      </div>
     </section>
 
     <section class="section catalog" id="catalog">
@@ -150,58 +159,66 @@
         </div>
         <div class="solution-stage" id="solution-stage" role="tabpanel" aria-labelledby="solution-kitchen" aria-live="polite">
           <div class="plan-board">
-            <svg class="technical-plan active" data-plan="kitchen" viewBox="60 20 600 410" role="img" aria-label="Упрощённая схема кухни со столешницей, ящиками и местом для техники">
-              <g class="plan-dimension">
-                <path class="draw-dimension" pathLength="1" d="M105 58H615M105 48V68M615 48V68"/>
-                <text x="360" y="40">пример: 2800 мм</text>
+            <svg class="technical-plan iso-illustration active" data-plan="kitchen" viewBox="0 0 700 520" role="img" aria-label="Изометрическая кухня со шкафами, столешницей, ящиками и встроенной техникой">
+              <g class="iso-fills" aria-hidden="true">
+                <path class="iso-fill fill-late" d="M75 280H520L605 232H160Z"/>
+                <path class="iso-fill fill-soft" d="M75 280H520V445H75Z"/>
+                <path class="iso-fill fill-dark" d="M520 280L605 232V397L520 445Z"/>
+                <path class="iso-fill fill-soft" d="M115 72H485V218H115Z"/>
+                <path class="iso-fill fill-dark" d="M485 72L565 28V174L485 218Z"/>
               </g>
-              <g class="furniture-lines">
-                <rect class="draw-piece" pathLength="1" x="105" y="100" width="510" height="285"/>
-                <path class="draw-piece" pathLength="1" d="M275 100V220M445 100V220"/>
-                <path class="draw-piece accent-line" pathLength="1" d="M105 235H615"/>
-                <path class="draw-piece" pathLength="1" d="M245 235V385M410 235V385M105 310H245"/>
-                <circle class="draw-piece" pathLength="1" cx="515" cy="302" r="38"/>
+              <g class="iso-lines">
+                <path class="draw-line phase-volume" data-delay="70" d="M75 280H520V445H75ZM75 280L160 232H605L520 280M520 280L605 232V397L520 445"/>
+                <path class="draw-line phase-volume" data-delay="220" d="M115 72H485V218H115ZM115 72L195 28H565L485 72M485 72L565 28V174L485 218"/>
+                <path class="draw-line phase-module" data-delay="460" d="M240 72V218M365 72V218M210 280V445M355 280V445M75 350H210"/>
+                <path class="draw-line phase-module" data-delay="650" d="M520 72V280M520 145H565M520 218H565"/>
+                <path class="draw-line phase-detail" data-delay="880" d="M374 300H500V426H374ZM387 318H487M395 407H479"/>
+                <path class="draw-line phase-detail" data-delay="1050" d="M98 305H185M230 305H335M140 93V198M265 93V198M390 93V198"/>
+                <path class="draw-line phase-accent iso-accent" data-delay="1280" d="M75 280H520L605 232M210 350H355"/>
               </g>
-              <g class="plan-labels">
-                <text x="126" y="260">столешница</text>
-                <text x="130" y="352">ящики</text>
-                <text x="472" y="365">техника</text>
-              </g>
-            </svg>
-            <svg class="technical-plan" data-plan="wardrobe" viewBox="60 20 600 410" role="img" aria-label="Упрощённая схема шкафа до потолка с полками и ящиками" hidden>
-              <g class="plan-dimension">
-                <path class="draw-dimension" pathLength="1" d="M125 58H595M125 48V68M595 48V68"/>
-                <text x="360" y="40">пример: 2200 мм</text>
-              </g>
-              <g class="furniture-lines">
-                <rect class="draw-piece" pathLength="1" x="125" y="90" width="470" height="310"/>
-                <path class="draw-piece" pathLength="1" d="M300 90V400M455 90V400"/>
-                <path class="draw-piece" pathLength="1" d="M320 150H435M320 215H435M320 280H435"/>
-                <path class="draw-piece" pathLength="1" d="M475 285H575M475 335H575"/>
-                <path class="draw-piece accent-line" pathLength="1" d="M150 165H275"/>
-              </g>
-              <g class="plan-labels">
-                <text x="145" y="120">шкаф до потолка</text>
-                <text x="335" y="258">полки</text>
-                <text x="485" y="372">ящики</text>
+              <g class="iso-shadow" aria-hidden="true">
+                <path d="M42 464H500L632 392H177Z"/>
               </g>
             </svg>
-            <svg class="technical-plan" data-plan="office" viewBox="60 20 600 410" role="img" aria-label="Упрощённая схема рабочей зоны со столешницей, тумбой и полками" hidden>
-              <g class="plan-dimension">
-                <path class="draw-dimension" pathLength="1" d="M100 58H620M100 48V68M620 48V68"/>
-                <text x="360" y="40">пример: 2400 мм</text>
+            <svg class="technical-plan iso-illustration" data-plan="wardrobe" viewBox="0 0 700 520" role="img" aria-label="Изометрический шкаф до потолка с фасадами, открытыми полками, штангой и ящиками" hidden>
+              <g class="iso-fills" aria-hidden="true">
+                <path class="iso-fill fill-soft" d="M120 92H500V450H120Z"/>
+                <path class="iso-fill fill-late" d="M120 92L205 44H585L500 92Z"/>
+                <path class="iso-fill fill-dark" d="M500 92L585 44V402L500 450Z"/>
+                <path class="iso-fill fill-open" d="M258 112H388V430H258Z"/>
               </g>
-              <g class="furniture-lines">
-                <path class="draw-piece accent-line" pathLength="1" d="M100 270H620"/>
-                <path class="draw-piece" pathLength="1" d="M135 270V395M430 270V395"/>
-                <rect class="draw-piece" pathLength="1" x="455" y="105" width="165" height="165"/>
-                <path class="draw-piece" pathLength="1" d="M455 160H620M455 215H620"/>
-                <path class="draw-piece" pathLength="1" d="M135 325H255M135 360H255"/>
+              <g class="iso-lines">
+                <path class="draw-line phase-volume" data-delay="70" d="M120 92H500V450H120ZM120 92L205 44H585L500 92M500 92L585 44V402L500 450"/>
+                <path class="draw-line phase-module" data-delay="350" d="M258 92V450M388 92V450"/>
+                <path class="draw-line phase-module" data-delay="520" d="M258 170H388M258 248H388M258 326H388M258 390H388"/>
+                <path class="draw-line phase-detail" data-delay="760" d="M408 170H478M408 190H478M408 345H478M408 390H478"/>
+                <path class="draw-line phase-detail" data-delay="940" d="M145 150H233M189 150V198M165 198C176 181 202 181 215 198L228 255H151Z"/>
+                <path class="draw-line phase-detail" data-delay="1120" d="M139 112V430M239 112V430M283 205H363M283 283H363M283 361H363"/>
+                <path class="draw-line phase-accent iso-accent" data-delay="1330" d="M120 326H258M388 326H500M245 264V292M401 264V292"/>
               </g>
-              <g class="plan-labels">
-                <text x="120" y="252">столешница</text>
-                <text x="156" y="388">тумба</text>
-                <text x="500" y="198">полки</text>
+              <g class="iso-shadow" aria-hidden="true">
+                <path d="M83 467H475L614 392H222Z"/>
+              </g>
+            </svg>
+            <svg class="technical-plan iso-illustration" data-plan="office" viewBox="0 0 700 520" role="img" aria-label="Изометрическая рабочая зона со столом, тумбой, полками и экраном" hidden>
+              <g class="iso-fills" aria-hidden="true">
+                <path class="iso-fill fill-late" d="M75 300H470L555 252H160Z"/>
+                <path class="iso-fill fill-soft" d="M95 324H220V450H95Z"/>
+                <path class="iso-fill fill-dark" d="M220 324L270 296V422L220 450Z"/>
+                <path class="iso-fill fill-soft" d="M425 75H555V300H425Z"/>
+                <path class="iso-fill fill-dark" d="M555 75L610 44V269L555 300Z"/>
+              </g>
+              <g class="iso-lines">
+                <path class="draw-line phase-volume" data-delay="80" d="M75 300H470L555 252H160ZM75 300V324H470V300M470 300L555 252V276L470 324"/>
+                <path class="draw-line phase-volume" data-delay="250" d="M95 324H220V450H95ZM220 324L270 296V422L220 450M95 324L145 296H270"/>
+                <path class="draw-line phase-volume" data-delay="420" d="M425 75H555V300H425ZM425 75L480 44H610L555 75M555 75L610 44V269L555 300"/>
+                <path class="draw-line phase-module" data-delay="680" d="M425 145H555M425 215H555M425 270H555M120 365H220M120 405H220"/>
+                <path class="draw-line phase-detail" data-delay="900" d="M285 176H410V265H285ZM302 192H393V246H302M347 265V292M317 292H377"/>
+                <path class="draw-line phase-detail" data-delay="1080" d="M120 342H198M120 382H198M120 422H198M449 110H531M449 180H531M449 245H531"/>
+                <path class="draw-line phase-accent iso-accent" data-delay="1300" d="M75 300H470L555 252M95 365H220"/>
+              </g>
+              <g class="iso-shadow" aria-hidden="true">
+                <path d="M42 468H466L590 401H167Z"/>
               </g>
             </svg>
             <p class="plan-mobile-summary">Столешница · ящики · техника</p>
